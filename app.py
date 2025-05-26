@@ -5,10 +5,13 @@ app = Flask(__name__)
 
 # Pool of strings
 quotes = [
-    "yo yo bitch!",
     "you cant touch this!",
     "see you later alligator!",
-    "continuous lunch!"
+    "continuous lunch!",
+    "prometheus is the shit!",
+    "yo mr white! yeah science!",
+    "i want to see your boss",
+    "wow! eize absurd!"
 ]
 
 @app.route('/')
