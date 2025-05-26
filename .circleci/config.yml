@@ -22,6 +22,20 @@ jobs:
       - run:
           name: Build Docker image
           command: docker build -t my-app:${CIRCLE_SHA1} .
+  run-docker-tests:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Pull built Docker image
+          command: |
+            docker image inspect my-app:${CIRCLE_SHA1} || docker build -t my-app:${CIRCLE_SHA1} .
+      - run:
+          name: Run container and test
+          command: |
+            docker run --rm my-app:${CIRCLE_SHA1} echo "Container started successfully"
 workflows:
   build-and-test:
     jobs:
@@ -29,3 +43,6 @@ workflows:
       - build-docker-image:
           requires:
             - test-python
+      - run-docker-tests:
+          requires:
+            - build-docker-image
