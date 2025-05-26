@@ -5,7 +5,6 @@ app = Flask(__name__)
 
 # Pool of strings
 quotes = [
-    "yo yo bitch!",
     "you cant touch this!",
     "see you later alligator!",
     "continuous lunch!",
