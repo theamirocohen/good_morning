@@ -10,7 +10,8 @@ quotes = [
     "continuous lunch!",
     "prometheus is the shit!",
     "yo mr white! yeah science!",
-    "i want to see your boss"
+    "i want to see your boss",
+    "wow! eize absurd!"
 ]
 
 @app.route('/')
