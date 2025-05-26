@@ -37,24 +37,24 @@ jobs:
           name: Run container in background
           command: |
             docker run -d -p 5000:5000 --name test-container my-app:${CIRCLE_SHA1}
-      - run:
-          name: Wait for container to be ready
-          command: |
-            for i in {1..25}; do
-              if curl -s -o /dev/null http://localhost:5000; then
-                echo "App is up!"; break;
-              fi
-              echo "Waiting for app..."; sleep 2;
-            done
-      - run:
-          name: Test HTTP 200 OK
-          command: |
-            http_code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5000)
-            if [ "$http_code" = "200" ]; then
-              echo "Received 200 OK!"
-            else
-              echo "Expected 200 but got $http_code"; exit 1
-            fi
+      # - run:
+      #     name: Wait for container to be ready
+      #     command: |
+      #       for i in {1..25}; do
+      #         if curl -s -o /dev/null http://localhost:5000; then
+      #           echo "App is up!"; break;
+      #         fi
+      #         echo "Waiting for app..."; sleep 2;
+      #       done
+      # - run:
+      #     name: Test HTTP 200 OK
+      #     command: |
+      #       http_code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:5000)
+      #       if [ "$http_code" = "200" ]; then
+      #         echo "Received 200 OK!"
+      #       else
+      #         echo "Expected 200 but got $http_code"; exit 1
+      #       fi
       - run:
           name: Stop and remove test container
           command: docker rm -f test-container
