@@ -83,3 +83,6 @@ workflows:
       - run-docker-tests:
           requires:
             - build-docker-image
+      - build-and-push-gitlab:
+          requires:
+            - run-docker-tests
