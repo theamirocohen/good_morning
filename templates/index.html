@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Random Quote</title>
+</head>
+<body>
+    <h1>Press the button!</h1>
+    <button onclick="getQuote()">press me!</button>
+    <p id="quote"></p>
+
+    <script>
+        function getQuote() {
+            fetch('/get_quote')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('quote').innerText = data.quote;
+                });
+        }
+    </script>
+</body>
+</html>
