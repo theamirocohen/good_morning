@@ -66,13 +66,13 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image
-          command: docker build -t registry.gitlab.com/YOUR_GITLAB_NAMESPACE/YOUR_PROJECT_NAME:latest .
+          command: docker build -t registry.gitlab.com/$YOUR_GITLAB_NAMESPACE/$YOUR_PROJECT_NAME:latest .
       - run:
           name: Login to GitLab Registry
           command: echo "$GITLAB_REGISTRY_PASSWORD" | docker login registry.gitlab.com -u "$GITLAB_REGISTRY_USER" --password-stdin
       - run:
           name: Push Docker image to GitLab Registry
-          command: docker push registry.gitlab.com/YOUR_GITLAB_NAMESPACE/YOUR_PROJECT_NAME:latest
+          command: docker push registry.gitlab.com/$YOUR_GITLAB_NAMESPACE/$YOUR_PROJECT_NAME:latest
 workflows:
   build-and-test:
     jobs:
