@@ -73,6 +73,34 @@ jobs:
       - run:
           name: Push Docker image to GitLab Registry
           command: docker push registry.gitlab.com/$YOUR_GITLAB_NAMESPACE/$YOUR_PROJECT_NAME:latest
+  checkov:
+    docker:
+      - image: bridgecrew/checkov:latest
+    working_directory: /tmp/workspace
+    environment:
+      ENV_FILE: /tmp/workspace/
+      DOCKER_BUILDKIT: "1"
+      BUILDKIT_PROGRESS: plain
+    steps:
+      - checkout
+      - attach_workspace:
+         at: /tmp/workspace
+
+      - run:
+          name: Install checkov
+          command: |
+           pip install -U checkov
+
+      - run:
+          name: Run Checkov
+          command: |
+           checkov --directory ./terraform  > checkov_output.txt
+
+      # Upload the output file to CircleCI artifacts
+      - store_artifacts:
+          path: checkov_output.txt
+          destination: checkov_output
+
 workflows:
   build-and-test:
     jobs:
@@ -86,3 +114,6 @@ workflows:
       - build-and-push-gitlab:
           requires:
             - run-docker-tests
+      - checkov:
+          requires:
+            - build-and-push-gitlab
